@@ -5,11 +5,11 @@ from decouple import config
 
 USERNAME = config("POSTGRES_USER")
 PASSWORD = config("POSTGRES_PASSWORD")
-print(USERNAME, PASSWORD)
+HOST = config("POSTGRES_HOST")
 
 class DB:
     Base = declarative_base()
-    engine = create_engine(f'postgresql://{USERNAME}:{PASSWORD}@45.77.214.239:5432/nudges')
+    engine = create_engine(f'postgresql://{USERNAME}:{PASSWORD}@{HOST}:5432/nudges')
     session = Session(engine)
 
     @classmethod
