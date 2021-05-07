@@ -2,10 +2,22 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, Table, MetaData
 from decouple import config
+import motor.motor_asyncio
 
 USERNAME = config("POSTGRES_USER")
 PASSWORD = config("POSTGRES_PASSWORD")
 HOST = config("POSTGRES_HOST")
+MONGO_USER = config("MONGO_USER")
+MONGO_PASSWORD = config("MONGO_PASSWORD")
+
+class MongoDB:
+    client = motor.motor_asyncio.AsyncIOMotorClient(f"mongodb://{MONGO_USER}:{MONGO_PASSWORD}@{HOST}:27017/")
+    db = client.housing.housingblobdata
+
+    @classmethod
+    async def find(cls, id_):
+        data = await cls.db.find_one({"_id": int(id_)})
+        return data
 
 class DB:
     Base = declarative_base()

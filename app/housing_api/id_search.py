@@ -5,6 +5,7 @@ class DynamicNameSearch:
     non_zip_mapping = {}
     zip_set = set()
     zip_mapping = {}
+    id_type_mapping = {}
     
     @classmethod
     def load_data(cls, queries) -> None:
@@ -14,6 +15,7 @@ class DynamicNameSearch:
             region_id = inst.regionid
             region_name = inst.regionname
             region_type = inst.regiontype
+            cls.id_type_mapping[region_id] = region_type
             st = inst.state
             state = inst.statename
             if region_type == "zip":
@@ -22,6 +24,7 @@ class DynamicNameSearch:
             else:
                 cls.non_zip_set.add(search_term)
                 cls.non_zip_mapping[search_term] = cls.pack_value(region_id, region_name, region_type, st, state)
+
                 
     @classmethod
     def pack_value(cls, region_id, region_name, region_type, st, state) -> dict:

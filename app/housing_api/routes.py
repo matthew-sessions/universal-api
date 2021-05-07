@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.housing_api.database import DB
+from app.housing_api.database import DB, MongoDB
 from app.housing_api.id_search import DynamicNameSearch
 
 housing = APIRouter()
@@ -30,3 +30,8 @@ def search(term):
     return {
         "results": DynamicNameSearch.search(term)
     }
+
+@housing.get("/deepsearch/{region_id}")
+async def get_housing_data(region_id):
+    data = await MongoDB.find(region_id)
+    return data

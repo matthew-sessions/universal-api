@@ -11,3 +11,6 @@ uvicorn
 uvloop
 websockets
 python-decouple
+pymongo
+motor
+dnspython
