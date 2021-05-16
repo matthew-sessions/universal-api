@@ -31,3 +31,7 @@ class VideoRedisRecv:
         cls.THREAD = threading.Thread(target=cls._collect_video)
         cls.THREAD.daemon = True
         cls.THREAD.start()
+
+    @classmethod
+    def push(cls, command: bytes) -> None:
+        cls.client.publish("commands", command)
