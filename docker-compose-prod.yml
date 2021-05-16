@@ -11,6 +11,7 @@ services:
     depends_on:
       - db
       - mongodb
+      - redis
 
   db:
     image: postgres:12.0-alpine
@@ -43,6 +44,11 @@ services:
     depends_on:
       - fast_api
 
+    redis:
+      image: redis
+      ports:
+        - 6379:6379
+    
 volumes:
   postgres_data:
   mongodb_data:
