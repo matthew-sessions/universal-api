@@ -1,15 +1,15 @@
 from fastapi import FastAPI
 from app.housing_api.routes import housing
-from app.drone.drone_routes import drone
+# from app.drone.drone_routes import drone
 from app.housing_api.id_search import DynamicNameSearch
 from app.housing_api.database import DB
 from fastapi.middleware.cors import CORSMiddleware
-from app.drone.video_handler import VideoRedisRecv
+# from app.drone.video_handler import VideoRedisRecv
 
 app = FastAPI()
 
 app.include_router(housing, prefix = "/housing")
-app.include_router(drone, prefix="/drone")
+# app.include_router(drone, prefix="/drone")
 origins = [
     "*",
 ]
@@ -26,5 +26,5 @@ app.add_middleware(
 
 @app.on_event("startup")
 async def startup():
-    VideoRedisRecv.run()
+    # VideoRedisRecv.run()
     DynamicNameSearch.load_data(DB.mapping_q())
